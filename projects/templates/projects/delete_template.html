@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {% include 'head_links.html' %}
+  </head>
+  <body>
+    <header>{% include 'navbar.html' %}</header>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <p>Are you sure you want to delete "{{ object }}"?</p>
+      <a href="{% url 'projects' %}"> GO Back </a>
+
+      <input type="submit" name="" id="" />
+    </form>
+  </body>
+</html>
