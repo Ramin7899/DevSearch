@@ -5,8 +5,11 @@ from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 import  uuid
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 # Create your models here.
+
 
 
 class Profiles(models.Model):
@@ -28,7 +31,9 @@ class Profiles(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self.user.username)
+        return str(self.username)
+
+
 
 class Skills(models.Model):
     owner = models.ForeignKey(Profiles, on_delete=models.CASCADE, null=True, blank=True)
@@ -39,3 +44,4 @@ class Skills(models.Model):
 
     def __str__(self):
         return str(self.name)
+
