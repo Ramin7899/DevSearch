@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 whitenoise = "*"
+django = "*"
+pillow = "*"
 
 [dev-packages]
 

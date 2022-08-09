@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .models import Profiles
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -52,16 +53,17 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.error(request, 'User was loggedout')
+    messages.info(request, 'User was loggedout')
     return redirect('login')
 
 def registerUser(request):
-    form = UserCreationForm()
+    form = CustomUserCreationForm()
     page = 'register'
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid:
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            print("here")
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
@@ -73,6 +75,18 @@ def registerUser(request):
 
         else:
             messages.success(request,'error')
+            
 
     contex = {'page':page,'form':form}
     return render(request, 'users/login_register.html', contex)
+
+
+@login_required(login_url='login')
+def userAccount(request):
+
+    profile = request.user.profiles
+    skills = profile.skills_set.all()
+    projects = profile.project_set.all()
+
+    contex = {'profile':profile,'skills':skills,'projects':projects}
+    return render(request, 'users/account.html', contex)
