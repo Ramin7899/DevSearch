@@ -41,11 +41,11 @@
 {% if messages %}
 <!--  -->
   {% for message in messages %}
-    <div class="alert alert--{{ message.tags }}">
+    <div class="alert alert--{{ message.tags }}" role="alert">
       <p class="alert__message">
         {{ message }}
       </p>
-      <button class="alert__close">
+      <button class="close alert__close" data-dismiss="alert" aria-label="Close">
         x
       </button>
     </div>
