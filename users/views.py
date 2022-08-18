@@ -1,18 +1,21 @@
 from cmath import log
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .models import Profiles
+from .models import Profiles, Skills
 from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-
+from .utils import searchProfiles
 # Create your views here.
 
 def profiles(request):
-    profile = Profiles.objects.all()
-    contex = {'profile':profile}
+
+
+    profiles, search_query = searchProfiles(request)
+
+    contex = {'profile':profiles,'search_query':search_query}
     return render(request, 'users/profiles.html', contex)
 
 def userProfile(request, pk):

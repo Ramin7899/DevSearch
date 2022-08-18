@@ -1,16 +1,22 @@
 # from crypt import methods
 from multiprocessing import context
+from turtle import title
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from pkg_resources import require
-from .models import Project
+from .models import Project, Tag
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from .utils import searchProjects
 
 
 def projects(request):
-    projects = Project.objects.all()
-    contex = {'projects': projects}
+
+    projects,search_query = searchProjects(request)
+
+   
+    contex = {'projects': projects,'search_query':search_query}
     return render(request, 'projects/projects.html', contex)
 
 
@@ -31,7 +37,7 @@ def createproject(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save()
-            return redirect('projects')
+            return redirect('account')
 
     return render(request,'projects/project_form.html', context)
 
