@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from .utils import searchProfiles
+from .utils import searchProfiles,paginateProfiles
 # Create your views here.
 
 def profiles(request):
@@ -15,7 +15,9 @@ def profiles(request):
 
     profiles, search_query = searchProfiles(request)
 
-    contex = {'profile':profiles,'search_query':search_query}
+    custom_range,profiles = paginateProfiles(request,profiles,3)
+
+    contex = {'profile':profiles,'search_query':search_query,'custom_range':custom_range}
     return render(request, 'users/profiles.html', contex)
 
 def userProfile(request, pk):
