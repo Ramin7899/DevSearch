@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  {% include 'head_links.html' %}
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header>{% include 'navbar.html' %}</header>
+
+  <!-- Main Section -->
+  <main class="messagePage my-xl">
+    <div class="content-box">
+      <div class="message">
+        <a class="backButton" href="{% url 'inbox' %}"><i class="im im-angle-left"></i></a>
+        <h2 class="message__subject">{{ message.subject }}</h4>
+          <a href="profile.html" class="message__author">{{ message.name }}</a>
+          <p class="message__date">{{ message.created }}</p>
+          <div class="message__body">
+            {{ message.body|linebreaksbr }}
+          </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
